@@ -1,0 +1,6 @@
+framework module DouYPlayer {
+  umbrella header "DouYPlayer-umbrella.h"
+
+  export *
+  module * { export * }
+}

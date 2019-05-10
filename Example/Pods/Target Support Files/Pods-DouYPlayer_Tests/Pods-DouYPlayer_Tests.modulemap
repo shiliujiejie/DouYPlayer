@@ -1,0 +1,6 @@
+framework module Pods_DouYPlayer_Tests {
+  umbrella header "Pods-DouYPlayer_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

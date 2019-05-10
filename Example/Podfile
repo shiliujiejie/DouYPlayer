@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'DouYPlayer_Example' do
+  pod 'DouYPlayer', :path => '../'
+
+  target 'DouYPlayer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
