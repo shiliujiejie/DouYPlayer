@@ -1,6 +1,6 @@
 {
   "name": "DouYPlayer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "DouYinPlayer - swift 4.2.",
   "description": "播放器： 1. 播放本地网络视频。 竖屏播放， 支持滑动， 鉴权.",
   "homepage": "https://github.com/shiliujiejie/DouYPlayer",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/shiliujiejie/DouYPlayer.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "9.0"

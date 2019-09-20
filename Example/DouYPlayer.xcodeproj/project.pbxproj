@@ -30,9 +30,9 @@
 /* Begin PBXFileReference section */
 		2F2D4E8E26ED0BE0770965E0 /* Pods_DouYPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DouYPlayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		303048D4B1E669543F822AD3 /* Pods-DouYPlayer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouYPlayer_Example.release.xcconfig"; path = "Target Support Files/Pods-DouYPlayer_Example/Pods-DouYPlayer_Example.release.xcconfig"; sourceTree = "<group>"; };
-		35459261160D12FC49E3451A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		35459261160D12FC49E3451A /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		402EDDD10BA11FA3B10AD2DA /* Pods-DouYPlayer_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouYPlayer_Tests.debug.xcconfig"; path = "Target Support Files/Pods-DouYPlayer_Tests/Pods-DouYPlayer_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		4E36C386D98E802177D01DCA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		4E36C386D98E802177D01DCA /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* DouYPlayer_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DouYPlayer_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +43,7 @@
 		607FACE51AFB9204008FA782 /* DouYPlayer_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DouYPlayer_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		87D9475320A37AF08AE3E7B2 /* DouYPlayer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = DouYPlayer.podspec; path = ../DouYPlayer.podspec; sourceTree = "<group>"; };
+		87D9475320A37AF08AE3E7B2 /* DouYPlayer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = DouYPlayer.podspec; path = ../DouYPlayer.podspec; sourceTree = "<group>"; };
 		90385F4D37A7966271A11031 /* Pods-DouYPlayer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouYPlayer_Example.debug.xcconfig"; path = "Target Support Files/Pods-DouYPlayer_Example/Pods-DouYPlayer_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		B2DD9C6394EF9D8A2A8FA23D /* Pods-DouYPlayer_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DouYPlayer_Tests.release.xcconfig"; path = "Target Support Files/Pods-DouYPlayer_Tests/Pods-DouYPlayer_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E56285C299402DFCBD703C1E /* Pods_DouYPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DouYPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +77,6 @@
 				402EDDD10BA11FA3B10AD2DA /* Pods-DouYPlayer_Tests.debug.xcconfig */,
 				B2DD9C6394EF9D8A2A8FA23D /* Pods-DouYPlayer_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -213,10 +212,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 57FD7JQYH5;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 57FD7JQYH5;
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -484,6 +485,7 @@
 			baseConfigurationReference = 90385F4D37A7966271A11031 /* Pods-DouYPlayer_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 57FD7JQYH5;
 				INFOPLIST_FILE = DouYPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -499,6 +501,7 @@
 			baseConfigurationReference = 303048D4B1E669543F822AD3 /* Pods-DouYPlayer_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 57FD7JQYH5;
 				INFOPLIST_FILE = DouYPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -513,6 +516,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 402EDDD10BA11FA3B10AD2DA /* Pods-DouYPlayer_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 57FD7JQYH5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -535,6 +539,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B2DD9C6394EF9D8A2A8FA23D /* Pods-DouYPlayer_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 57FD7JQYH5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

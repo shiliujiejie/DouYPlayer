@@ -16,7 +16,7 @@ class NicooPlayerControlView: UIView {
     /// 顶部控制栏
     lazy var topControlBarView: UIView = {
         let view = UIView()
-       //view.backgroundColor = UIColor(white: 0.2, alpha: 0.2)
+        //view.backgroundColor = UIColor(white: 0.2, alpha: 0.2)
         //创建渐变层
         //view.layer.addSublayer(topBarBgLayer)
         return view
@@ -88,7 +88,7 @@ class NicooPlayerControlView: UIView {
     /// 底部控制栏
     lazy var bottomControlBarView: UIView = {
         let view = UIView()
-       // view.backgroundColor = UIColor(white: 0.2, alpha: 0.2)
+        // view.backgroundColor = UIColor(white: 0.2, alpha: 0.2)
         //创建渐变层
         //view.layer.addSublayer(bottomBarBgLayer)
         return view
@@ -150,6 +150,7 @@ class NicooPlayerControlView: UIView {
         button.setImage(NicooImgManager.foundImage(imageName: "pause"), for: .normal)
         button.setImage(NicooImgManager.foundImage(imageName: "play"), for: .selected)
         button.addTarget(self, action: #selector(NicooPlayerControlView.playOrPauseBtnClick(_:)), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     lazy var screenLockButton: UIButton = {
@@ -197,7 +198,7 @@ class NicooPlayerControlView: UIView {
         didSet {
             if let barIsHiden = barIsHidden {
                 if barIsHiden {
-                   // hideTopBottomBar()
+                    // hideTopBottomBar()
                 } else {
                     //showTopBottomBar()
                 }
@@ -280,7 +281,7 @@ class NicooPlayerControlView: UIView {
         bottomControlBarView.addSubview(fullScreenBtn)
         replayContainerView.addSubview(replayButton)
         replayContainerView.addSubview(replayLable)
-       
+        
         addSubview(loadingView)
         addSubview(screenLockButton)
         
@@ -301,14 +302,14 @@ class NicooPlayerControlView: UIView {
     @objc func autoHideScreenLockButton() {
         screenLockButton.isHidden = true
     }
-   
+    
 }
 
 // MARK: - User -Actions {
 
 extension NicooPlayerControlView {
     
-   // MARK: - GestureRecognizers - Action
+    // MARK: - GestureRecognizers - Action
     @objc func singleTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
         if screenIsLock! {                                                    // 锁屏状态下，单击手势只显示锁屏按钮
             screenLockButton.isHidden = !screenLockButton.isHidden
@@ -323,6 +324,7 @@ extension NicooPlayerControlView {
                 self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
             }
         }
+        
     }
     
     @objc func doubleTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
@@ -440,7 +442,7 @@ extension NicooPlayerControlView {
             make.height.equalTo(0)
         }
         bottomControlBarView.snp.updateConstraints { (make) in
-            make.height.equalTo(fullScreen! ? 10 : 60)
+            make.height.equalTo(fullScreen! ? 10 : 50)
         }
         
         UIView.animate(withDuration: 0.1, animations: {
@@ -460,7 +462,7 @@ extension NicooPlayerControlView {
         }
         
         bottomControlBarView.snp.updateConstraints { (make) in
-            make.height.equalTo(60)
+            make.height.equalTo(50)
         }
         UIView.animate(withDuration: 0.2, animations: {
             self.layoutIfNeeded()
@@ -498,11 +500,11 @@ extension NicooPlayerControlView {
     private func layoutBottomControlBarView() {
         bottomControlBarView.snp.makeConstraints { (make) in
             make.leading.trailing.equalTo(0)
-            make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -80 : -44)
+            make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -75 : -44)
             if UIDevice.current.isiPad() {             //兼容iPad
                 make.height.equalTo(80)
             } else {
-                make.height.equalTo(60)
+                make.height.equalTo(50)
             }
             
         }
@@ -579,7 +581,7 @@ extension NicooPlayerControlView {
         playOrPauseBtn.snp.makeConstraints { (make) in
             make.top.leading.equalTo(5)
             make.bottom.equalTo(-5)
-            make.width.equalTo(30)
+            make.width.equalTo(1)
         }
     }
     private func layoutPositionTimeLab() {
@@ -642,7 +644,7 @@ extension NicooPlayerControlView {
         }
         munesButton.snp.updateConstraints { (make) in
             make.top.equalTo(fullScreen ? 20 : 0)
-    
+            
         }
     }
     
@@ -652,12 +654,12 @@ extension NicooPlayerControlView {
         bottomControlBarView.layoutIfNeeded()
         if fullScreen! {
             topBarBgLayer.frame = CGRect(x: -80, y: 0, width: topControlBarView.frame.size.width + 160, height: topControlBarView.frame.size.height)
-            bottomBarBgLayer.frame = CGRect(x: -80, y: 0, width: bottomControlBarView.frame.size.width + 160, height: 60)
+            bottomBarBgLayer.frame = CGRect(x: -80, y: 0, width: bottomControlBarView.frame.size.width + 160, height: 50)
         } else {
             topBarBgLayer.frame = CGRect(x: 0, y: 0, width: topControlBarView.frame.size.width, height: topControlBarView.frame.size.height)
             bottomBarBgLayer.frame = CGRect(x: 0, y: 0, width: bottomControlBarView.frame.size.width, height: 60)
         }
-       
+        
     }
     
 }
