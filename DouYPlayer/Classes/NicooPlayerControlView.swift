@@ -105,20 +105,20 @@ class NicooPlayerControlView: UIView {
     lazy var loadedProgressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.progress = 0
-        progressView.progressTintColor = UIColor.lightGray
-        progressView.trackTintColor = UIColor.lightGray //UIColor(white: 0.2, alpha: 0.5)
+        progressView.progressTintColor = UIColor(white: 0.9, alpha: 0.25)
+        progressView.trackTintColor = UIColor(white: 0.2, alpha: 0.15)
         progressView.backgroundColor = UIColor.clear
         progressView.contentMode = ContentMode.scaleAspectFit
         progressView.tintColor = UIColor.clear
         return progressView
     }()
     lazy var timeSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 10))
         slider.minimumValue = 0
         slider.maximumValue = 1.0
         slider.backgroundColor = UIColor.clear
         slider.contentMode = ContentMode.scaleAspectFit
-        slider.minimumTrackTintColor = UIColor.orange
+        slider.minimumTrackTintColor = UIColor(white: 0.9, alpha: 0.5)
         slider.maximumTrackTintColor = UIColor.clear
         slider.setThumbImage(NicooImgManager.foundImage(imageName: "sliderflash"), for: .normal)
         slider.setThumbImage(NicooImgManager.foundImage(imageName: "sliderHightLight"), for: .highlighted)
@@ -127,6 +127,7 @@ class NicooPlayerControlView: UIView {
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderAllTouchEnd(_:)), for: .touchCancel)
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderAllTouchEnd(_:)), for: .touchUpInside)
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderAllTouchEnd(_:)), for: .touchUpOutside)
+        //slider.alpha = 0.0
         return slider
     }()
     lazy var positionTimeLab: UILabel = {
@@ -135,6 +136,7 @@ class NicooPlayerControlView: UIView {
         lable.text = "00:00"
         lable.font = UIFont.systemFont(ofSize: 13)
         lable.textColor = .white
+        lable.isHidden = true
         return lable
     }()
     lazy var durationTimeLab: UILabel = {
@@ -143,6 +145,7 @@ class NicooPlayerControlView: UIView {
         durationLab.text = barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides ? "00:00" : "00:00/00:00"
         durationLab.font = UIFont.systemFont(ofSize: 13)
         durationLab.textColor = .white
+        durationLab.isHidden = true
         return durationLab
     }()
     lazy var playOrPauseBtn: UIButton = {
@@ -347,10 +350,11 @@ extension NicooPlayerControlView {
         barIsHidden = false  // 防止拖动进度时，操作栏5秒后自动隐藏
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideTopBottomBar), object: nil)
         delegate?.sliderTouchBegin(sender)
-        
+        //sender.alpha = 1.0
     }
     
     @objc func sliderAllTouchEnd(_ sender: UISlider) {
+        //sender.alpha = 0.0
         delegate?.sliderTouchEnd(sender)
         if !barIsHidden! {   // 拖动完成后，操作栏5秒后自动隐藏
             self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
@@ -462,7 +466,7 @@ extension NicooPlayerControlView {
         }
         
         bottomControlBarView.snp.updateConstraints { (make) in
-            make.height.equalTo(50)
+            make.height.equalTo(10)
         }
         UIView.animate(withDuration: 0.2, animations: {
             self.layoutIfNeeded()
@@ -500,13 +504,12 @@ extension NicooPlayerControlView {
     private func layoutBottomControlBarView() {
         bottomControlBarView.snp.makeConstraints { (make) in
             make.leading.trailing.equalTo(0)
-            make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -75 : -44)
+            make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -80 : -46)
             if UIDevice.current.isiPad() {             //兼容iPad
                 make.height.equalTo(80)
             } else {
-                make.height.equalTo(50)
+                make.height.equalTo(10)
             }
-            
         }
     }
     private func layoutCloseButton() {
@@ -595,21 +598,21 @@ extension NicooPlayerControlView {
     private func layoutLoadedProgressView() {
         loadedProgressView.snp.makeConstraints { (make) in
             make.centerY.equalTo(bottomControlBarView.snp.centerY)
-            make.height.equalTo(1.5)
+            make.height.equalTo(0.9)
             if barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides {
-                make.leading.equalTo(positionTimeLab.snp.trailing).offset(2)
+                make.leading.equalTo(bottomControlBarView).offset(2)
             } else {
-                make.leading.equalTo(playOrPauseBtn.snp.trailing).offset(2)
+                make.leading.equalTo(bottomControlBarView).offset(2)
             }
-            make.trailing.equalTo(durationTimeLab.snp.leading).offset(-2)
+            make.trailing.equalTo(bottomControlBarView).offset(-2)
         }
     }
     private func layoutTimeSlider() {
         timeSlider.snp.makeConstraints { (make) in
             make.centerY.equalTo(loadedProgressView.snp.centerY).offset(-1)  // 调整一下进度条和 加载进度条的位置
-            make.leading.equalTo(loadedProgressView.snp.leading)
-            make.trailing.equalTo(loadedProgressView.snp.trailing)
-            make.height.equalTo(50)
+            make.leading.equalTo(loadedProgressView.snp.leading).offset(2)
+            make.trailing.equalTo(loadedProgressView.snp.trailing).offset(-2)
+            make.height.equalTo(10)
         }
     }
     private func layoutDurationTimeLab() {
