@@ -27,8 +27,8 @@ public protocol NicooPlayerDelegate: class {
     
     /// 代理在外部处理网络问题
     func retryToPlayVideo(_ player: NicooPlayerView, _ videoModel: NicooVideoModel?, _ fatherView: UIView?)
-    /// 自定义点击
-    func customActionForPalyer(_ player: NicooPlayerView, _ resUnavailable: Bool)
+    /// 自定义点击 actionKeyId: 1. 重新获取数据 2.充值 3. 分享
+    func customActionForPalyer(_ player: NicooPlayerView, _ actionKeyId: Int)
     
     /// 当前播放的视频播放完成时调用
     ///
@@ -46,7 +46,7 @@ public extension NicooPlayerDelegate {
     func currentVideoPlayToEnd(_ videoModel: NicooVideoModel?, _ isPlayingDownLoadFile: Bool) {
     }
     /// 自定义错误提示
-    func cunstomActionForPalyer(_ player: NicooPlayerView, _ resUnavailable: Bool) { }
+    func customActionForPalyer(_ player: NicooPlayerView, _ actionKeyId: Int) { }
     func showOrHideLoadingview(_ isPlaying: Bool) { }
     /// 是否禁用滑动
     func enableScrollAndPanGestureOrNoteWith(isEnable: Bool){ }
@@ -250,7 +250,7 @@ open class NicooPlayerView: UIView {
     /// 网络不好时提示
     private lazy var loadedFailedView: NicooLoadedFailedView = {
         let failedView = NicooLoadedFailedView(frame: self.bounds)
-        failedView.backgroundColor = UIColor(white: 0.2, alpha: 0.5)
+        failedView.backgroundColor = UIColor(white: 0.1, alpha: 0.4)
         return failedView
     }()
     
@@ -480,11 +480,15 @@ extension NicooPlayerView {
         }
         loadedFailedView.goChrageButtonClickBlock = { [weak self] (sender) in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.customActionForPalyer(strongSelf, false)
+            strongSelf.delegate?.customActionForPalyer(strongSelf, 2)
+        }
+        loadedFailedView.goShareButtonClickBlock = { [weak self] (sender) in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.customActionForPalyer(strongSelf, 3)
         }
         loadedFailedView.reFetchButtonClickBlock = { [weak self] (sender) in
             guard let strongSelf = self else { return }
-            strongSelf.delegate?.customActionForPalyer(strongSelf, true)
+            strongSelf.delegate?.customActionForPalyer(strongSelf, 1)
         }
         loadedFailedView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
@@ -506,16 +510,19 @@ extension NicooPlayerView {
                 loadedFailedView.retryButton.isHidden = true
                 loadedFailedView.reFetchButton.isHidden = true
                 loadedFailedView.goChrageButton.isHidden = false
+                loadedFailedView.goShareButton.isHidden = false
                 loadedFailedView.loadFailedTitle.attributedText =  TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 7)
             } else if errorDes!.contains("noPermission"){
                 loadedFailedView.retryButton.isHidden = true
                 loadedFailedView.reFetchButton.isHidden = true
                 loadedFailedView.goChrageButton.isHidden = false
-                loadedFailedView.loadFailedTitle.attributedText =  TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 7)
+                loadedFailedView.goShareButton.isHidden = false
+                loadedFailedView.loadFailedTitle.attributedText =  TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 8)
             } else {
                 loadedFailedView.retryButton.isHidden = false
                 loadedFailedView.reFetchButton.isHidden = true
                 loadedFailedView.goChrageButton.isHidden = true
+                loadedFailedView.goShareButton.isHidden = true
                 loadedFailedView.loadFailedTitle.text = NicooLoadedFailedView.notNetwork
             }
         }
