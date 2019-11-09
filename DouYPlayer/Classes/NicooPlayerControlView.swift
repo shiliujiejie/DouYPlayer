@@ -105,15 +105,15 @@ class NicooPlayerControlView: UIView {
     lazy var loadedProgressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.progress = 0
-        progressView.progressTintColor = UIColor(white: 0.9, alpha: 0.25)
-        progressView.trackTintColor = UIColor(white: 0.2, alpha: 0.15)
+        progressView.progressTintColor = UIColor(white: 0.9, alpha: 0.5)
+        progressView.trackTintColor = UIColor(white: 0.2, alpha: 0.3)
         progressView.backgroundColor = UIColor.clear
         progressView.contentMode = ContentMode.scaleAspectFit
         progressView.tintColor = UIColor.clear
         return progressView
     }()
     lazy var timeSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 10))
+        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 20))
         slider.minimumValue = 0
         slider.maximumValue = 1.0
         slider.backgroundColor = UIColor.clear
@@ -598,7 +598,7 @@ extension NicooPlayerControlView {
     private func layoutLoadedProgressView() {
         loadedProgressView.snp.makeConstraints { (make) in
             make.centerY.equalTo(bottomControlBarView.snp.centerY)
-            make.height.equalTo(0.9)
+            make.height.equalTo(1.0)
             if barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides {
                 make.leading.equalTo(bottomControlBarView).offset(2)
             } else {
@@ -612,7 +612,7 @@ extension NicooPlayerControlView {
             make.centerY.equalTo(loadedProgressView.snp.centerY).offset(-1)  // 调整一下进度条和 加载进度条的位置
             make.leading.equalTo(loadedProgressView.snp.leading).offset(2)
             make.trailing.equalTo(loadedProgressView.snp.trailing).offset(-2)
-            make.height.equalTo(10)
+            make.height.equalTo(20)
         }
     }
     private func layoutDurationTimeLab() {
