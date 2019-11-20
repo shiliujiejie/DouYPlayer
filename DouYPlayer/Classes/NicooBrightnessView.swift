@@ -109,3 +109,42 @@ class NicooBrightnessView: UIView {
         }
     }
 }
+
+
+class CustomSlider: UISlider {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.minimumValue = 0
+        self.maximumValue = 1
+        self.value = 0
+        self.minimumTrackTintColor = .clear
+        self.maximumTrackTintColor = .clear
+        self.thumbTintColor = UIColor.clear
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    //修改slider的位置和大小
+    override func trackRect(forBounds bounds: CGRect) -> CGRect {
+        return CGRect(x: 0, y: 6, width: self.frame.size.width, height: 6)
+    }
+    //修改圆点图标的位置和触摸区域的大小
+    override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
+        var trect = rect
+        NLog("thumbRect == \(trect)")
+        trect.origin.x -= 2
+        trect.size.width += 4
+        var srect = super.thumbRect(forBounds: bounds, trackRect: trect, value: value)
+        srect.origin.y = 5
+        srect.size.height = 9
+        NLog("srectRect == \(srect)")
+        return srect
+    }
+    //处理手势冲突
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
+    }
+    
+}
+

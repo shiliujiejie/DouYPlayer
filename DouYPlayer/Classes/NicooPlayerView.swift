@@ -219,10 +219,10 @@ open class NicooPlayerView: UIView {
     /// 显示拖动进度的显示
     private lazy var draggedProgressView: UIView = {
         let view = UIView()
-        view.backgroundColor =  UIColor.clear
-        view.addSubview(self.draggedStatusButton)
         view.addSubview(self.draggedTimeLable)
-        view.layer.cornerRadius = 3
+        view.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+        view.layer.cornerRadius = 6
+        view.layer.masksToBounds = true
         return view
     }()
     private lazy var draggedStatusButton: UIButton = {
@@ -847,6 +847,7 @@ private extension NicooPlayerView {
         playControllViewEmbed.replayButtonClickBlock = { [weak self] (_) in
             self?.avItem?.seek(to: CMTime.zero)
             self?.playControllViewEmbed.timeSlider.value = 0
+            self?.playControllViewEmbed.loadedProgressView.setProgress(0, animated: true)
             self?.playControllViewEmbed.screenIsLock = false
             self?.startReadyToPlay()
             self?.playerStatu = PlayerStatus.Playing
@@ -1018,11 +1019,12 @@ private extension NicooPlayerView {
         // 拖动时间展示
         let allTimeString =  formatTimDuration(position: Int(sumValue), duration: Int(totalMoveDuration))
         let draggedTimeString = formatTimPosition(position: Int(sumValue), duration: Int(totalMoveDuration))
-        draggedTimeLable.text = String(format: "%@ | %@", draggedTimeString, allTimeString)
+        draggedTimeLable.text = String(format: " %@ | %@ ", draggedTimeString, allTimeString)
         playControllViewEmbed.positionTimeLab.text = self.formatTimPosition(position: Int(sumValue), duration: Int(totalMoveDuration))
         draggedStatusButton.isSelected = moveValue < 0
         if !isDragging {
             playControllViewEmbed.timeSlider.value = Float(dragValue)
+            playControllViewEmbed.loadedProgressView.setProgress(Float(dragValue), animated: false)
         }
         sumTime = sumValue
         return dragValue
@@ -1061,6 +1063,7 @@ private extension NicooPlayerView {
         
         avItem?.seek(to: CMTime.zero)
         playControllViewEmbed.timeSlider.value = 0
+        playControllViewEmbed.loadedProgressView.setProgress(0, animated: false)
         playControllViewEmbed.screenIsLock = false
         startReadyToPlay()
         playerStatu = PlayerStatus.Playing
@@ -1207,6 +1210,7 @@ extension NicooPlayerView: NicooPlayerControlViewDelegate {
         let draggedTimeString = self.formatTimPosition(position: Int(dragValue), duration: Int(duration))
         self.draggedTimeLable.text = String(format: "%@ | %@", draggedTimeString, allTimeString)
         self.playControllViewEmbed.positionTimeLab.text = draggedTimeString
+        self.playControllViewEmbed.loadedProgressView.setProgress(sender.value, animated: false)
     }
 }
 
@@ -1314,6 +1318,7 @@ extension NicooPlayerView {
             }
             if !isDragging {
                 self.playControllViewEmbed.timeSlider.value = playValue
+                self.playControllViewEmbed.loadedProgressView.setProgress(playValue, animated: false)
                 self.playedValue = Float(value)                                      // 保存播放进度
             }
         }
@@ -1359,7 +1364,7 @@ extension NicooPlayerView {
             let timeInterval = startSeconds + durationSeconds                    // 计算总进度
             let totalDuration = CMTimeGetSeconds(avItem.asset.duration)
             self.loadedValue = Float(timeInterval)                               // 保存缓存进度
-            self.playControllViewEmbed.loadedProgressView.setProgress(Float(timeInterval/totalDuration), animated: true)
+            // self.playControllViewEmbed.loadedProgressView.setProgress(Float(timeInterval/totalDuration), animated: true)
         }
     }
     
@@ -1382,7 +1387,7 @@ extension NicooPlayerView {
     }
     private func layoutDraggedContainers() {
         layoutDraggedProgressView()
-        layoutDraggedStatusButton()
+        // layoutDraggedStatusButton()
         layoutDraggedTimeLable()
     }
     private func layoutSelf() {
@@ -1399,8 +1404,8 @@ extension NicooPlayerView {
         draggedProgressView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -120 : -95)
-            make.height.equalTo(90)
-            make.width.equalTo(190)
+            make.height.equalTo(70)
+            make.width.equalTo(150)
         }
     }
     private func layoutDraggedStatusButton() {
@@ -1415,8 +1420,7 @@ extension NicooPlayerView {
         draggedTimeLable.snp.makeConstraints { (make) in
             make.leading.equalTo(8)
             make.trailing.equalTo(-8)
-            make.bottom.equalToSuperview()
-            make.top.equalTo(draggedStatusButton.snp.bottom)
+            make.centerY.equalToSuperview()
         }
     }
     private func layoutPauseButton() {

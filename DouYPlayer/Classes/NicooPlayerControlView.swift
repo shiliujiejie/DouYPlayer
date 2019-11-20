@@ -105,23 +105,19 @@ class NicooPlayerControlView: UIView {
     lazy var loadedProgressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.progress = 0
-        progressView.progressTintColor = UIColor(white: 0.9, alpha: 0.5)
-        progressView.trackTintColor = UIColor(white: 0.2, alpha: 0.3)
+        progressView.progressTintColor = UIColor(white: 1.0, alpha: 1.0)
+        progressView.trackTintColor = UIColor(white:0.4, alpha: 0.5)
         progressView.backgroundColor = UIColor.clear
         progressView.contentMode = ContentMode.scaleAspectFit
         progressView.tintColor = UIColor.clear
         return progressView
     }()
-    lazy var timeSlider: UISlider = {
-        let slider = UISlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 20))
+    lazy var timeSlider: CustomSlider = {
+        let slider = CustomSlider(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 30))
         slider.minimumValue = 0
         slider.maximumValue = 1.0
         slider.backgroundColor = UIColor.clear
         slider.contentMode = ContentMode.scaleAspectFit
-        slider.minimumTrackTintColor = UIColor(white: 0.9, alpha: 0.5)
-        slider.maximumTrackTintColor = UIColor.clear
-        slider.setThumbImage(NicooImgManager.foundImage(imageName: "sliderflash"), for: .normal)
-        slider.setThumbImage(NicooImgManager.foundImage(imageName: "sliderHightLight"), for: .highlighted)
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderValueChange(_:)),for:.valueChanged)
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderAllTouchBegin(_:)), for: .touchDown)
         slider.addTarget(self, action: #selector(NicooPlayerControlView.sliderAllTouchEnd(_:)), for: .touchCancel)
@@ -314,20 +310,20 @@ extension NicooPlayerControlView {
     
     // MARK: - GestureRecognizers - Action
     @objc func singleTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
-        if screenIsLock! {                                                    // 锁屏状态下，单击手势只显示锁屏按钮
-            screenLockButton.isHidden = !screenLockButton.isHidden
-            if !screenLockButton.isHidden {
-                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideScreenLockButton), object: nil)
-                self.perform(#selector(autoHideScreenLockButton), with: nil, afterDelay: 5)
-            }
-        }else {
-            barIsHidden = !barIsHidden! // 单击改变操作栏的显示隐藏
-            if !barIsHidden! {
-                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideTopBottomBar), object: nil)
-                self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
-            }
-        }
-        
+        //        if screenIsLock! {                                                    // 锁屏状态下，单击手势只显示锁屏按钮
+        //            screenLockButton.isHidden = !screenLockButton.isHidden
+        //            if !screenLockButton.isHidden {
+        //                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideScreenLockButton), object: nil)
+        //                self.perform(#selector(autoHideScreenLockButton), with: nil, afterDelay: 5)
+        //            }
+        //        }else {
+        //            barIsHidden = !barIsHidden! // 单击改变操作栏的显示隐藏
+        //            if !barIsHidden! {
+        //                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideTopBottomBar), object: nil)
+        //                self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
+        //            }
+        //        }
+        self.playOrPauseBtnClick(playOrPauseBtn) // 双击时直接响应播放暂停按钮点击
     }
     
     @objc func doubleTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
@@ -350,6 +346,8 @@ extension NicooPlayerControlView {
         barIsHidden = false  // 防止拖动进度时，操作栏5秒后自动隐藏
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideTopBottomBar), object: nil)
         delegate?.sliderTouchBegin(sender)
+        sender.maximumTrackTintColor = UIColor(white: 0.5, alpha: 0.5)
+        sender.minimumTrackTintColor = UIColor.white
         //sender.alpha = 1.0
     }
     
@@ -359,6 +357,8 @@ extension NicooPlayerControlView {
         if !barIsHidden! {   // 拖动完成后，操作栏5秒后自动隐藏
             self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
         }
+        sender.maximumTrackTintColor = UIColor.clear
+        sender.minimumTrackTintColor = UIColor.clear
     }
     
     // MARK: - closeButton - Action
@@ -600,18 +600,18 @@ extension NicooPlayerControlView {
             make.centerY.equalTo(bottomControlBarView.snp.centerY)
             make.height.equalTo(1.0)
             if barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides {
-                make.leading.equalTo(bottomControlBarView).offset(2)
+                make.leading.equalTo(bottomControlBarView).offset(1)
             } else {
-                make.leading.equalTo(bottomControlBarView).offset(2)
+                make.leading.equalTo(bottomControlBarView).offset(1)
             }
-            make.trailing.equalTo(bottomControlBarView).offset(-2)
+            make.trailing.equalTo(bottomControlBarView).offset(-1)
         }
     }
     private func layoutTimeSlider() {
         timeSlider.snp.makeConstraints { (make) in
             make.centerY.equalTo(loadedProgressView.snp.centerY).offset(-1)  // 调整一下进度条和 加载进度条的位置
-            make.leading.equalTo(loadedProgressView.snp.leading).offset(2)
-            make.trailing.equalTo(loadedProgressView.snp.trailing).offset(-2)
+            make.leading.equalTo(loadedProgressView.snp.leading)
+            make.trailing.equalTo(loadedProgressView.snp.trailing)
             make.height.equalTo(20)
         }
     }
