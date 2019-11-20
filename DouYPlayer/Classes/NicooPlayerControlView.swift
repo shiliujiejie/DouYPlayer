@@ -106,7 +106,7 @@ class NicooPlayerControlView: UIView {
         let progressView = UIProgressView()
         progressView.progress = 0
         progressView.progressTintColor = UIColor(white: 1.0, alpha: 1.0)
-        progressView.trackTintColor = UIColor(white:0.4, alpha: 0.5)
+        progressView.trackTintColor = UIColor(white:0.6, alpha: 0.5)
         progressView.backgroundColor = UIColor.clear
         progressView.contentMode = ContentMode.scaleAspectFit
         progressView.tintColor = UIColor.clear

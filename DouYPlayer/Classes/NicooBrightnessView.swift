@@ -132,13 +132,13 @@ class CustomSlider: UISlider {
     //修改圆点图标的位置和触摸区域的大小
     override func thumbRect(forBounds bounds: CGRect, trackRect rect: CGRect, value: Float) -> CGRect {
         var trect = rect
-        NLog("thumbRect == \(trect)")
+        //NLog("thumbRect == \(trect)")
         trect.origin.x -= 2
         trect.size.width += 4
         var srect = super.thumbRect(forBounds: bounds, trackRect: trect, value: value)
         srect.origin.y = 5
         srect.size.height = 9
-        NLog("srectRect == \(srect)")
+        //NLog("srectRect == \(srect)")
         return srect
     }
     //处理手势冲突
