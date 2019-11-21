@@ -110,7 +110,6 @@ class NicooBrightnessView: UIView {
     }
 }
 
-
 class CustomSlider: UISlider {
     
     override init(frame: CGRect) {
@@ -141,10 +140,48 @@ class CustomSlider: UISlider {
         //NLog("srectRect == \(srect)")
         return srect
     }
-    //处理手势冲突
-    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
-    }
+    //    //处理手势冲突
+    //    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    //        return false
+    //    }
     
 }
 
+class ZanAnimation: NSObject {
+    
+    static let angleArr: [CGFloat] = [CGFloat.pi / 4.0, -CGFloat.pi / 4.0, 0.0]
+    
+    static func showAnimation(point: CGPoint, baseView: UIView, size: CGFloat) {
+        
+        let imgV = UIImageView.init(frame: CGRect.init(x: point.x - size / 2.0, y: point.y - size / 2.0, width: size, height: size))
+        imgV.image = NicooImgManager.foundImage(imageName: "zanImage")
+        imgV.contentMode = .scaleAspectFill
+        imgV.alpha = 0.5
+        baseView.addSubview(imgV)
+        
+        // 偏移角度
+        let num = Int(arc4random_uniform(3))
+        imgV.transform = CGAffineTransform.init(rotationAngle: ZanAnimation.angleArr[num])
+        // 放大动画
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        animation.duration = 0.15
+        animation.calculationMode = CAAnimationCalculationMode.cubic
+        animation.values = [1.3, 0.8, 1.0]
+        imgV.layer.add(animation, forKey: "transform.scale")
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                imgV.alpha = 0.0
+                var newFrame = imgV.frame
+                newFrame.origin.x -= 5.0
+                newFrame.origin.y -= 45.0
+                newFrame.size.height += 10.0
+                newFrame.size.width += 10.0
+                imgV.frame = newFrame
+            }, completion: { (isOK) in
+                imgV.removeFromSuperview()
+            })
+        }
+    }
+}

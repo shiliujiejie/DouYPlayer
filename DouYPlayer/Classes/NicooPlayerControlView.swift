@@ -9,6 +9,7 @@ protocol NicooPlayerControlViewDelegate: class {
     func sliderTouchBegin(_ sender: UISlider)
     func sliderTouchEnd(_ sender: UISlider)
     func sliderValueChange(_ sender: UISlider)
+    func sliderTapForValueChange(_ value: Float)
 }
 
 class NicooPlayerControlView: UIView {
@@ -177,6 +178,13 @@ class NicooPlayerControlView: UIView {
         gesture.numberOfTouchesRequired = 1
         return gesture
     }()
+    lazy var sliderTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer()
+        gesture.addTarget(self, action: #selector(sliderTapGestureRecognizers(_:)))
+        gesture.numberOfTapsRequired = 1
+        gesture.numberOfTouchesRequired = 1
+        return gesture
+    }()
     lazy var doubleTapGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer()
         gesture.addTarget(self, action: #selector(doubleTapGestureRecognizers(_:)))
@@ -257,6 +265,7 @@ class NicooPlayerControlView: UIView {
     var replayButtonClickBlock: ((_ sender: UIButton) -> ())?
     var screenLockButtonClickBlock: ((_ sender: UIButton) -> ())?
     var pangeustureAction: ((_ sender: UIPanGestureRecognizer) ->())?
+    var doubleTapGestureAction:(() ->Void)?
     
     // MARK: - LifeCycle
     
@@ -323,11 +332,34 @@ extension NicooPlayerControlView {
         //                self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
         //            }
         //        }
-        self.playOrPauseBtnClick(playOrPauseBtn) // 双击时直接响应播放暂停按钮点击
+        let touchPoint = sender.location(in: self)
+        let tapAreaY = UIScreen.main.bounds.size.height - 100 - (UIDevice.current.isXSeriesDevices() ? 34 : 0)
+        NLog("touchpoint.Y = \(touchPoint.y) tapAreaY == \(tapAreaY)")
+        if touchPoint.y <= tapAreaY {
+            self.playOrPauseBtnClick(playOrPauseBtn) // 双击时直接响应播放暂停按钮点击
+        }
     }
     
+    @objc func sliderTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
+        let touchPoint = sender.location(in: timeSlider)
+        let value = touchPoint.x/timeSlider.frame.size.width
+        NLog("valueTouch === \(value)")
+        timeSlider.setValue(Float(value), animated: true)
+        loadedProgressView.setProgress(Float(value), animated: true)
+        timeSlider.maximumTrackTintColor = UIColor(white: 0.5, alpha: 0.5)
+        timeSlider.minimumTrackTintColor = UIColor.white
+        delegate?.sliderTapForValueChange(Float(value))
+        
+    }
     @objc func doubleTapGestureRecognizers(_ sender: UITapGestureRecognizer) {
-        self.playOrPauseBtnClick(playOrPauseBtn) // 双击时直接响应播放暂停按钮点击
+        let touchPoint = sender.location(in: self)
+        let tapAreaY = UIScreen.main.bounds.size.height - 120 - (UIDevice.current.isXSeriesDevices() ? 34 : 0)
+        NLog("touchpoint.Y = \(touchPoint.y) tapAreaY == \(tapAreaY)")
+        if touchPoint.y <= tapAreaY {
+            ZanAnimation.showAnimation(point: touchPoint, baseView: self,size: 30)
+            ZanAnimation.showAnimation(point: CGPoint(x: touchPoint.x + 10, y: touchPoint.y - 70), baseView: self, size: 50)
+            doubleTapGestureAction?()
+        }
     }
     
     @objc func panGestureRecognizers(_ sender: UIPanGestureRecognizer) {
@@ -343,16 +375,18 @@ extension NicooPlayerControlView {
     }
     
     @objc func sliderAllTouchBegin(_ sender: UISlider) {
+        sliderTapGesture.isEnabled = false
         barIsHidden = false  // 防止拖动进度时，操作栏5秒后自动隐藏
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autoHideTopBottomBar), object: nil)
-        delegate?.sliderTouchBegin(sender)
         sender.maximumTrackTintColor = UIColor(white: 0.5, alpha: 0.5)
         sender.minimumTrackTintColor = UIColor.white
+        delegate?.sliderTouchBegin(sender)
         //sender.alpha = 1.0
     }
     
     @objc func sliderAllTouchEnd(_ sender: UISlider) {
         //sender.alpha = 0.0
+        sliderTapGesture.isEnabled = true
         delegate?.sliderTouchEnd(sender)
         if !barIsHidden! {   // 拖动完成后，操作栏5秒后自动隐藏
             self.perform(#selector(autoHideTopBottomBar), with: nil, afterDelay: 5)
@@ -413,7 +447,9 @@ extension NicooPlayerControlView: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view is UISlider {
-            return false
+            if gestureRecognizer != sliderTapGesture {
+                return false
+            }
         }
         return true
     }
@@ -428,6 +464,7 @@ extension NicooPlayerControlView {
         self.addGestureRecognizer(singleTapGesture)
         self.addGestureRecognizer(doubleTapGesture)
         self.addGestureRecognizer(panGesture)
+        self.timeSlider.addGestureRecognizer(sliderTapGesture)
         // 解决点击当前view时候响应其他控件事件
         singleTapGesture.delaysTouchesBegan = true
         doubleTapGesture.delaysTouchesBegan = true
@@ -437,6 +474,7 @@ extension NicooPlayerControlView {
         // 双击，滑动 ，失败响应单击事件,
         singleTapGesture.require(toFail: doubleTapGesture)
         singleTapGesture.require(toFail: panGesture)
+        singleTapGesture.require(toFail: sliderTapGesture)
     }
     
     
@@ -600,11 +638,11 @@ extension NicooPlayerControlView {
             make.centerY.equalTo(bottomControlBarView.snp.centerY)
             make.height.equalTo(1.0)
             if barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides {
-                make.leading.equalTo(bottomControlBarView).offset(1)
+                make.leading.equalTo(bottomControlBarView)
             } else {
-                make.leading.equalTo(bottomControlBarView).offset(1)
+                make.leading.equalTo(bottomControlBarView)
             }
-            make.trailing.equalTo(bottomControlBarView).offset(-1)
+            make.trailing.equalTo(bottomControlBarView)
         }
     }
     private func layoutTimeSlider() {

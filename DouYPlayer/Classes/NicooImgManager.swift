@@ -17,6 +17,12 @@ public struct  NicooVideoModel {
     public var videoPlaySinceTime: Float = 0
 }
 
+public class CoinsVideoModel: NSObject {
+    public var videoCoins: Int = 0
+    public var isCoinsVideo: Bool = false
+    public var coinsUserPacket: Int = 0
+    public var userName: String = ""
+}
 
 class TextManager: NSObject {
     

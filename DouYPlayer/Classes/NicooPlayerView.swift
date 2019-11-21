@@ -27,7 +27,7 @@ public protocol NicooPlayerDelegate: class {
     
     /// 代理在外部处理网络问题
     func retryToPlayVideo(_ player: NicooPlayerView, _ videoModel: NicooVideoModel?, _ fatherView: UIView?)
-    /// 自定义点击 actionKeyId: 1. 重新获取数据 2.充值 3. 分享
+    /// 自定义点击 actionKeyId: 1. 重新获取数据 2.充值 3. 分享 4.上传 5.充值 6. 购买
     func customActionForPalyer(_ player: NicooPlayerView, _ actionKeyId: Int)
     
     /// 当前播放的视频播放完成时调用
@@ -40,6 +40,8 @@ public protocol NicooPlayerDelegate: class {
     func showOrHideLoadingview(_ isPlaying: Bool)
     /// 是否禁用滑动
     func enableScrollAndPanGestureOrNoteWith(isEnable: Bool)
+    /// 双击手势
+    func doubleTapGestureAction()
 }
 
 public extension NicooPlayerDelegate {
@@ -50,6 +52,8 @@ public extension NicooPlayerDelegate {
     func showOrHideLoadingview(_ isPlaying: Bool) { }
     /// 是否禁用滑动
     func enableScrollAndPanGestureOrNoteWith(isEnable: Bool){ }
+    /// 双击手势
+    func doubleTapGestureAction() { }
 }
 
 /// 播放状态枚举
@@ -171,6 +175,8 @@ open class NicooPlayerView: UIView {
     /// 是否只在全屏时显示视频名称
     public var videoNameShowOnlyFullScreen: Bool = false
     public var video_id: Int? = 0
+    /// 金币视频预览时间
+    public var coinsPerWatchTime: Float = 10.0
     public var isNotPermission: Bool = false
     public weak var delegate: NicooPlayerDelegate?
     public weak var customViewDelegate: NicooCustomMuneDelegate?
@@ -198,6 +204,15 @@ open class NicooPlayerView: UIView {
                 //print("到了这里表示，视频已经在开始播放了")
                 if self.subviews.contains(loadedFailedView) {
                     self.loadedFailedView.removeFromSuperview()
+                }
+                if playedValue >= coinsPerWatchTime {  // 大于金币 可预览时间
+                    if let iscoin = coinsVideo?.isCoinsVideo, let coins = coinsVideo?.videoCoins {
+                        if iscoin && coins > 0 {  // 未购买的金币视频
+                            playerStatu = PlayerStatus.Pause
+                            pauseButton.isHidden = true
+                            showLoadedFailedView("NotBuy", nil)
+                        }
+                    }
                 }
             }
         }
@@ -311,6 +326,8 @@ open class NicooPlayerView: UIView {
     private var isM3U8: Bool = false
     /// 是否正在拖动进度
     private var isDragging: Bool = false
+    /// 视频模型， 这里主要用于判断是否是金币视频
+    private var coinsVideo: CoinsVideoModel?
     /// 音量大小
     private var volumeSliderValue: Float64 = 0
     private var playerLayer: AVPlayerLayer?
@@ -425,9 +442,18 @@ extension NicooPlayerView {
     open func getLoadingPositionTime() -> Float {
         return self.loadedValue
     }
-    
+    /// 设置进度条是否可以拖动
     open func timeProgressEnabled(_ isEnabled: Bool) {
         self.playControllViewEmbed.timeSlider.isUserInteractionEnabled = isEnabled
+    }
+    /// 金币视频赋值
+    open func setCoinsVideoValues(isCoin: Bool,coinsCount: Int, coinsUser: Int, userNickName: String)  {
+        let coinsModel = CoinsVideoModel()
+        coinsModel.videoCoins = coinsCount
+        coinsModel.isCoinsVideo = isCoin
+        coinsModel.coinsUserPacket = coinsUser
+        coinsModel.userName = userNickName
+        coinsVideo = coinsModel
     }
     
     /// 取消视频缓存加载
@@ -472,58 +498,56 @@ extension NicooPlayerView {
         if !self.subviews.contains(loadedFailedView) {
             self.addSubview(loadedFailedView)
         }
-        loadedFailedView.retryButtonClickBlock = { [weak self] (sender) in
+        /// 重新连接
+        loadedFailedView.retryButtonClickBlock = { [weak self] in
             guard let strongSelf = self else { return }
             let model = NicooVideoModel(videoName: strongSelf.videoName, videoUrl: strongSelf.playUrl?.absoluteString, videoPlaySinceTime: strongSelf.playTimeSince)
             //strongSelf.delegate?.retryToPlayVideo(strongSelf, model, strongSelf.fatherView)
             strongSelf.delegate?.retryToPlayVideo(strongSelf, model, strongSelf.fatherView)
         }
-        loadedFailedView.goChrageButtonClickBlock = { [weak self] (sender) in
+        ///  去买会员
+        loadedFailedView.goChrageButtonClickBlock = { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.customActionForPalyer(strongSelf, 2)
         }
-        loadedFailedView.goShareButtonClickBlock = { [weak self] (sender) in
+        /// 去分享
+        loadedFailedView.goShareButtonClickBlock = { [weak self]  in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.customActionForPalyer(strongSelf, 3)
         }
-        loadedFailedView.reFetchButtonClickBlock = { [weak self] (sender) in
+        /// 重新拉取视频列表
+        loadedFailedView.reFetchButtonClickBlock = { [weak self]  in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.customActionForPalyer(strongSelf, 1)
+        }
+        /// 上传点击
+        loadedFailedView.goUploadButtonClickBlock = { [weak self]  in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.customActionForPalyer(strongSelf,4)
+        }
+        /// 购买视频或者充值金币
+        loadedFailedView.goPayButtonClickBlock = { [weak self]  (canPay) in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.customActionForPalyer(strongSelf, canPay ? 6 : 5)
         }
         loadedFailedView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         /// 配置UI
         if errorDes == nil {
-            loadedFailedView.goChrageButton.isHidden = true
-            loadedFailedView.reFetchButton.isHidden = true
-            loadedFailedView.retryButton.isHidden = false
+            loadedFailedView.setType(.Failed)
         } else {
-            /* else if errorDes!.contains("-1008") && errorDes!.contains("resource unavailable") {  //-1008 \"resource unavailable
-             loadedFailedView.retryButton.isHidden = true
-             loadedFailedView.reFetchButton.isHidden = false
-             loadedFailedView.goChrageButton.isHidden = true
-             loadedFailedView.loadFailedTitle.text = NicooLoadedFailedView.resUnavailable
-             }*/
-            //You do not have permission to access the requested resource.   -1102
             if errorDes!.contains("-1102") && errorDes!.contains("do not have permission") {
-                loadedFailedView.retryButton.isHidden = true
-                loadedFailedView.reFetchButton.isHidden = true
-                loadedFailedView.goChrageButton.isHidden = false
-                loadedFailedView.goShareButton.isHidden = false
-                loadedFailedView.loadFailedTitle.attributedText =  TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 7)
+                loadedFailedView.setType(.NoPermission)
             } else if errorDes!.contains("noPermission"){
-                loadedFailedView.retryButton.isHidden = true
-                loadedFailedView.reFetchButton.isHidden = true
-                loadedFailedView.goChrageButton.isHidden = false
-                loadedFailedView.goShareButton.isHidden = false
-                loadedFailedView.loadFailedTitle.attributedText =  TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 8)
+                loadedFailedView.setType(.NoPermission)
+            } else if errorDes!.contains("NotBuy"){
+                loadedFailedView.setType(.CoinsVideo)
+                if let coins = coinsVideo {
+                    loadedFailedView.coinsTipsView.setCoinsModel(coins)
+                }
             } else {
-                loadedFailedView.retryButton.isHidden = false
-                loadedFailedView.reFetchButton.isHidden = true
-                loadedFailedView.goChrageButton.isHidden = true
-                loadedFailedView.goShareButton.isHidden = true
-                loadedFailedView.loadFailedTitle.text = NicooLoadedFailedView.notNetwork
+                loadedFailedView.setType(.Failed)
             }
         }
     }
@@ -830,6 +854,10 @@ private extension NicooPlayerView {
                 self?.playerStatu = PlayerStatus.Playing
             }
         }
+        // MARK: - 双击
+        playControllViewEmbed.doubleTapGestureAction = { [weak self] in
+            self?.delegate?.doubleTapGestureAction()
+        }
         // MARK: - 锁屏
         playControllViewEmbed.screenLockButtonClickBlock = { [weak self] (sender) in
             guard let strongSelf = self else { return }
@@ -873,7 +901,6 @@ private extension NicooPlayerView {
                     }
                 })
             }
-            
         }
         // MARK: - 音量，亮度，进度拖动
         self.configureSystemVolume()             // 获取系统音量控件   可以选择自定义，效果会比系统的好
@@ -1162,6 +1189,15 @@ private extension NicooPlayerView {
         //        }
     }
     
+    @objc func hidenValueChangeViewShow() {
+        playControllViewEmbed.timeSlider.maximumTrackTintColor = UIColor.clear
+        playControllViewEmbed.timeSlider.minimumTrackTintColor = UIColor.clear
+        if subviews.contains(draggedProgressView) {
+            draggedProgressView.removeFromSuperview()
+        }
+        //delegate?.enableScrollAndPanGestureOrNoteWith(isEnable: true)
+    }
+    
 }
 
 // MARK: - NicooPlayerControlViewDelegate
@@ -1212,6 +1248,28 @@ extension NicooPlayerView: NicooPlayerControlViewDelegate {
         self.playControllViewEmbed.positionTimeLab.text = draggedTimeString
         self.playControllViewEmbed.loadedProgressView.setProgress(sender.value, animated: false)
     }
+    
+    func sliderTapForValueChange(_ value: Float) {
+        guard let avItem = self.avItem else {
+            return
+        }
+        //delegate?.enableScrollAndPanGestureOrNoteWith(isEnable: false)
+        if !self.subviews.contains(draggedProgressView) {
+            addSubview(draggedProgressView)
+            layoutDraggedContainers()
+        }
+        let duration = Float64 ((avItem.asset.duration.value)/Int64(avItem.asset.duration.timescale))
+        let dragValue = Float64(duration) * Float64(value)
+        let position = Float64 ((avItem.asset.duration.value)/Int64(avItem.asset.duration.timescale))
+        let po = CMTimeMakeWithSeconds(Float64(position) * Float64(value), preferredTimescale: (avItem.asset.duration.timescale))
+        avItem.seek(to: po, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        // 拖动时间展示
+        let allTimeString =  self.formatTimDuration(position: Int(dragValue), duration: Int(duration))
+        let draggedTimeString = self.formatTimPosition(position: Int(dragValue), duration: Int(duration))
+        self.draggedTimeLable.text = String(format: "%@ | %@", draggedTimeString, allTimeString)
+        self.perform(#selector(hidenValueChangeViewShow), with: nil, afterDelay: 1.0)
+    }
+    
 }
 
 // MARK: - NicooLoaderUrlConnectionDelegate
