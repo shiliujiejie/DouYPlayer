@@ -117,12 +117,13 @@ class NicooLoadedFailedView: UIView {
 
 /// 提示金币买视频 和 充值金币
 class CoinTipView: UIView {
+    
     var titleLabel: UILabel = {
         let lable = UILabel()
         lable.textAlignment = .center
-        lable.font = UIFont.systemFont(ofSize: 12)
-        lable.textColor = UIColor(red: 251, green: 3, blue: 37, alpha: 1)
-        lable.numberOfLines = 3
+        lable.font = UIFont.systemFont(ofSize: 13)
+        lable.textColor = UIColor.red
+        lable.numberOfLines = 2
         return lable
     }()
     var coinLabel: UILabel = {
@@ -144,7 +145,7 @@ class CoinTipView: UIView {
     var goUploadButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("我要上传", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 19
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1.0
@@ -195,7 +196,7 @@ class CoinTipView: UIView {
     }
     
     func setCoinsModel(_ coins: CoinsVideoModel) {
-        titleLabel.text = "视频由抖友\(coins.userName)上传 ,\n 并设置观看价格"
+        titleLabel.text = "视频由抖友\(coins.userName)上传, 并设置观看价格"
         coinLabel.text = "\(coins.videoCoins)金币"
         coinLeaseLabel.text = "我的金币: \(coins.coinsUserPacket)"
         if coins.coinsUserPacket >= coins.videoCoins {  // 金币足够，可以支付
@@ -233,7 +234,8 @@ class CoinTipView: UIView {
         titleLabel.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(coinLabel.snp.top).offset(-10)
-            make.height.equalTo(20)
+            make.width.equalTo(260)
+            make.height.equalTo(45)
         }
     }
 }
