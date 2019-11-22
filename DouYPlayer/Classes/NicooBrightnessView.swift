@@ -156,7 +156,7 @@ class ZanAnimation: NSObject {
         let imgV = UIImageView.init(frame: CGRect.init(x: point.x - size / 2.0, y: point.y - size / 2.0, width: size, height: size))
         imgV.image = NicooImgManager.foundImage(imageName: "zanImage")
         imgV.contentMode = .scaleAspectFill
-        imgV.alpha = 0.5
+        imgV.alpha = 0.75
         baseView.addSubview(imgV)
         
         // 偏移角度
@@ -164,7 +164,7 @@ class ZanAnimation: NSObject {
         imgV.transform = CGAffineTransform.init(rotationAngle: ZanAnimation.angleArr[num])
         // 放大动画
         let animation = CAKeyframeAnimation(keyPath: "transform.scale")
-        animation.duration = 0.15
+        animation.duration = 0.25
         animation.calculationMode = CAAnimationCalculationMode.cubic
         animation.values = [1.3, 0.8, 1.0]
         imgV.layer.add(animation, forKey: "transform.scale")
