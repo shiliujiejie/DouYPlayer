@@ -636,7 +636,7 @@ extension NicooPlayerControlView {
     private func layoutLoadedProgressView() {
         loadedProgressView.snp.makeConstraints { (make) in
             make.centerY.equalTo(bottomControlBarView.snp.centerY)
-            make.height.equalTo(1.0)
+            make.height.equalTo(1.5)
             if barType == PlayerBottomBarType.PlayerBottomBarTimeBothSides {
                 make.leading.equalTo(bottomControlBarView)
             } else {

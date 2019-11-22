@@ -1461,7 +1461,7 @@ extension NicooPlayerView {
     private func layoutDraggedProgressView() {
         draggedProgressView.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(UIDevice.current.isXSeriesDevices() ? -120 : -95)
+            make.centerY.equalToSuperview().offset(120)
             make.height.equalTo(70)
             make.width.equalTo(150)
         }
