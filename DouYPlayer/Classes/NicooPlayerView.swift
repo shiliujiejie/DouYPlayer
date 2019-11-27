@@ -124,17 +124,17 @@ open class NicooPlayerView: UIView {
             playControllViewEmbed.closeButton.isSelected = isFullScreen!
             playControllViewEmbed.fullScreenBtn.isSelected = isFullScreen!
             playControllViewEmbed.fullScreen = isFullScreen!
-            if let view = UIApplication.shared.value(forKey: "statusBar") as? UIView {  // 状态栏变化
-                if !isFullScreen! {
-                    view.alpha = 1.0
-                } else {  // 全频
-                    if playControllViewEmbed.barIsHidden! { // 状态栏
-                        view.alpha = 0
-                    } else {
-                        view.alpha = 1.0
-                    }
-                }
-            }
+//            if let view = UIApplication.shared.value(forKey: "statusBar") as? UIView {  // 状态栏变化
+//                if !isFullScreen! {
+//                    view.alpha = 1.0
+//                } else {  // 全频
+//                    if playControllViewEmbed.barIsHidden! { // 状态栏
+//                        view.alpha = 0
+//                    } else {
+//                        view.alpha = 1.0
+//                    }
+//                }
+//            }
             if !isFullScreen! {
                 /// 非全屏状态下，移除自定义视图
                 if let customView = self.viewWithTag(NicooPlayerView.kCustomViewTag) {

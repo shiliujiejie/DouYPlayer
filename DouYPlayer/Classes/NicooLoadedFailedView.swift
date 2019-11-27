@@ -39,7 +39,7 @@ class NicooLoadedFailedView: UIView {
         super.init(frame: frame)
         self.layer.cornerRadius  = 5
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        self.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         self.loadUI()
         self.addHandler()
     }

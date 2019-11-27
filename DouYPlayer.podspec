@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'DouYPlayer'
   s.version          = '0.2.3'
-  s.summary          = 'DouYinPlayer - swift 4.2.'
+  s.summary          = 'DouYinPlayer - swift 5'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -30,6 +30,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '9.0'
   s.swift_version = '4.2'
+  s.swift_version = '5.0'
   s.source_files = 'DouYPlayer/Classes/**/*'
   
   s.resource_bundles = {

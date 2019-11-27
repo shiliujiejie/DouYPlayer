@@ -1,5 +1,5 @@
 PODS:
-  - DouYPlayer (0.1.5):
+  - DouYPlayer (0.2.3):
     - SnapKit
   - SnapKit (4.2.0)
 
@@ -7,7 +7,7 @@ DEPENDENCIES:
   - DouYPlayer (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -15,9 +15,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  DouYPlayer: afc90dcc0f68a192f67144070a4ea7c1ba6406a4
+  DouYPlayer: 02247f839b726da1eae7a134cbaf92b6bad2a488
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
 PODFILE CHECKSUM: 438b62d889d0b429c5e8f3b03123c9f3a7b8b050
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.8.4
