@@ -191,7 +191,7 @@
 		56917E7DB4B9B9344009F9B2A4311FC6 /* back@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "back@3x.png"; path = "DouYPlayer/Assets/back@3x.png"; sourceTree = "<group>"; };
 		5B3D1E72289667D4BA6D946E25320953 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Source/LayoutConstraintItem.swift; sourceTree = "<group>"; };
 		5E62545952A3F91C0FFB7163FA3ABB9E /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
-		5FE973B5B65B91566229D83E62302B46 /* DouYPlayer.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DouYPlayer.bundle; path = "DouYPlayer-DouYPlayer.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FE973B5B65B91566229D83E62302B46 /* DouYPlayer.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DouYPlayer.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		6043A60B74B531F62E520A7669D4E907 /* SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SnapKit-Info.plist"; sourceTree = "<group>"; };
 		62526768B0933882A844A3CC52757009 /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		688FFFD5FF1966FEAB8BF0BDDC962735 /* back_hight@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "back_hight@3x.png"; path = "DouYPlayer/Assets/back_hight@3x.png"; sourceTree = "<group>"; };
@@ -204,12 +204,12 @@
 		7597745DD02F02027BEB927801E4E7E2 /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Source/ConstraintDescription.swift; sourceTree = "<group>"; };
 		784E71663FDE42A52D425DA752FC02E7 /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Source/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		7A9E8324D0994261E310D8C9ABB5015C /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Source/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
-		7C41CCD7E1430074AB63DE6125B92364 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		7C594F327741498857AA7F8BAB9F2B2F /* DouYPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DouYPlayer.framework; path = DouYPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C41CCD7E1430074AB63DE6125B92364 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		7C594F327741498857AA7F8BAB9F2B2F /* DouYPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DouYPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EBF7E2437879B7E778B358BBFD4B13E /* lockscreen@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "lockscreen@3x.png"; path = "DouYPlayer/Assets/lockscreen@3x.png"; sourceTree = "<group>"; };
 		7FD8C8CD8944BE63C9B37E9754B3D7A6 /* share_hight@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "share_hight@2x.png"; path = "DouYPlayer/Assets/share_hight@2x.png"; sourceTree = "<group>"; };
 		80912167FBEFDF5492A04495BDCAD6E7 /* share_hight@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "share_hight@3x.png"; path = "DouYPlayer/Assets/share_hight@3x.png"; sourceTree = "<group>"; };
-		8140CD7D26C04BA44CD66A3A8E338230 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		8140CD7D26C04BA44CD66A3A8E338230 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83B3C95CE1C9E29051B42AB91C342BA7 /* Pods-DouYPlayer_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DouYPlayer_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		85774157628FD64E66DC169AB5D6763B /* Pods-DouYPlayer_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DouYPlayer_Example-dummy.m"; sourceTree = "<group>"; };
 		873E5B7F6478F3D9AF945E6B3138A6A4 /* NicooVideoRequestTask.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NicooVideoRequestTask.swift; path = DouYPlayer/Classes/NicooVideoRequestTask.swift; sourceTree = "<group>"; };
@@ -217,13 +217,13 @@
 		8E4871EBF408854677892BABEEC247C5 /* NicooPlayerControlView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NicooPlayerControlView.swift; path = DouYPlayer/Classes/NicooPlayerControlView.swift; sourceTree = "<group>"; };
 		93B717C695F4786DE0DC0B65E591953F /* NicooAssetResourceLoader.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NicooAssetResourceLoader.swift; path = DouYPlayer/Classes/NicooAssetResourceLoader.swift; sourceTree = "<group>"; };
 		94AF81EE4ED5F469E9D7F25AC947FD03 /* share@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "share@3x.png"; path = "DouYPlayer/Assets/share@3x.png"; sourceTree = "<group>"; };
-		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		98DC2771299E9AD19F5EA7A732468F31 /* Pods_DouYPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DouYPlayer_Tests.framework; path = "Pods-DouYPlayer_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		98DC2771299E9AD19F5EA7A732468F31 /* Pods_DouYPlayer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DouYPlayer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C12038B34951B9B002DAB0D5FE023DA /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
-		9C73E26C0B2560B6B432081E72D19626 /* Pods_DouYPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_DouYPlayer_Example.framework; path = "Pods-DouYPlayer_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C73E26C0B2560B6B432081E72D19626 /* Pods_DouYPlayer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DouYPlayer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C87F70E835D22459F492D40CB584A67 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Source/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
 		9C88CC5947F8FE398598A8E3ADB2BF60 /* replay@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "replay@3x.png"; path = "DouYPlayer/Assets/replay@3x.png"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A156835F5B20B0DE5962C7DD63E2E761 /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
 		A23DE5B5F4B593DDCE0ADE8616B85C5A /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Source/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		A32C201C2FA6086F1D6B78F3120E1196 /* share@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "share@2x.png"; path = "DouYPlayer/Assets/share@2x.png"; sourceTree = "<group>"; };
@@ -260,7 +260,7 @@
 		D5902768DE34E1627B020F4B2FB7BBBE /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		D5CDBAA27F904A8799E49D7F3697CF08 /* Player_pause@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "Player_pause@3x.png"; path = "DouYPlayer/Assets/Player_pause@3x.png"; sourceTree = "<group>"; };
 		D6262242E94B28EC856A2755365063E1 /* backward@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "backward@2x.png"; path = "DouYPlayer/Assets/backward@2x.png"; sourceTree = "<group>"; };
-		D65945D1B3412737E53A9641A5B570C9 /* DouYPlayer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DouYPlayer.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D65945D1B3412737E53A9641A5B570C9 /* DouYPlayer.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DouYPlayer.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		DD8D32723152661B232CDA5953082DEE /* Pods-DouYPlayer_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DouYPlayer_Example-umbrella.h"; sourceTree = "<group>"; };
 		E21B4EB2CAC44390D976C65ABE1CE2F5 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		E437EE4C1966C27A6D5A939EC687D2AF /* Pods-DouYPlayer_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DouYPlayer_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -520,7 +520,6 @@
 				9C87F70E835D22459F492D40CB584A67 /* UILayoutSupport+Extensions.swift */,
 				C91EDAA5CCFDB0CED5792EE230E47FD8 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1174,8 +1173,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
