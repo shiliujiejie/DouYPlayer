@@ -83,9 +83,11 @@ class NicooLoadedFailedView: UIView {
     private func addHandler() {
         loadFailView.reFetchButtonClickBlock = { [weak self] in
             self?.reFetchButtonClickBlock?()
+            self?.removeFromSuperview()
         }
         loadFailView.retryButtonClickBlock = { [weak self] in
             self?.retryButtonClickBlock?()
+            self?.removeFromSuperview()
         }
         vipTipsView.goChrageButtonClickBlock = { [weak self] in
             self?.goChrageButtonClickBlock?()
@@ -308,13 +310,11 @@ class NetWorkFailOrErrorView: UIView {
         if retryButtonClickBlock != nil {
             retryButtonClickBlock!()
         }
-        self.removeFromSuperview()
     }
     @objc func reFetchButtonClick(_ sender: UIButton) {
         if reFetchButtonClickBlock != nil {
             reFetchButtonClickBlock!()
         }
-        self.removeFromSuperview()
     }
     
     private func layoutAllSubviews() {

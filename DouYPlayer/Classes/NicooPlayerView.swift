@@ -42,6 +42,8 @@ public protocol NicooPlayerDelegate: class {
     func enableScrollAndPanGestureOrNoteWith(isEnable: Bool)
     /// 双击手势
     func doubleTapGestureAction()
+    /// 准备播放
+    func readyToPlay()
 }
 
 public extension NicooPlayerDelegate {
@@ -54,6 +56,8 @@ public extension NicooPlayerDelegate {
     func enableScrollAndPanGestureOrNoteWith(isEnable: Bool){ }
     /// 双击手势
     func doubleTapGestureAction() { }
+    /// 准备播放
+    func readyToPlay() {}
 }
 
 /// 播放状态枚举
@@ -1345,6 +1349,7 @@ extension NicooPlayerView {
         } else if keyPath == "playbackBufferEmpty" {
             playerStatu = PlayerStatus.Buffering                // 监听播放器正在缓冲数据
             print("playbackBufferEmpty")
+            delegate?.readyToPlay()
         } else if keyPath == "playbackLikelyToKeepUp" {                   //监听视频缓冲达到可以播放的状态
             print("playbackLikelyToKeepUp")
             playControllViewEmbed.playOrPauseBtn.isSelected = true
