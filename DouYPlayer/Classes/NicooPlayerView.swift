@@ -179,6 +179,10 @@ open class NicooPlayerView: UIView {
     /// 是否只在全屏时显示视频名称
     public var videoNameShowOnlyFullScreen: Bool = false
     public var video_id: Int? = 0
+    
+    ///是否鉴权通过
+    public var isAuthAccross: Bool = true
+    
     /// 金币视频预览时间
     public var coinsPerWatchTime: Float = 10.0
     public var isNotPermission: Bool = false
@@ -343,6 +347,7 @@ open class NicooPlayerView: UIView {
     /// 音量显示
     private var volumeSlider: UISlider?
     
+
     
     // MARK: - Life - Cycle
     
@@ -555,9 +560,6 @@ extension NicooPlayerView {
             }
         }
     }
-    
-    
-    
 }
 
 // MARK: - Private Funcs (私有方法)
@@ -802,13 +804,10 @@ private extension NicooPlayerView {
         avItem.addObserver(self, forKeyPath: "loadedTimeRanges", options: NSKeyValueObservingOptions.new, context: nil)
         avItem.addObserver(self, forKeyPath: "playbackBufferEmpty", options: NSKeyValueObservingOptions.new, context: nil)
         avItem.addObserver(self, forKeyPath: "playbackLikelyToKeepUp", options: NSKeyValueObservingOptions.new, context: nil)
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        // 注册屏幕旋转通知
-        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: UIDevice.current)
-        NotificationCenter.default.addObserver(self, selector: #selector(NicooPlayerView.orientChange(_:)), name: UIDevice.orientationDidChangeNotification, object: UIDevice.current)
-        
-        
-        
+//        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+//        // 注册屏幕旋转通知
+//        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: UIDevice.current)
+//        NotificationCenter.default.addObserver(self, selector: #selector(NicooPlayerView.orientChange(_:)), name: UIDevice.orientationDidChangeNotification, object: UIDevice.current)
     }
     
     // MARK: - 返回，关闭，全屏，播放，暂停,重播,音量，亮度，进度拖动 - UserAction
@@ -1096,8 +1095,12 @@ private extension NicooPlayerView {
         playControllViewEmbed.timeSlider.value = 0
         playControllViewEmbed.loadedProgressView.setProgress(0, animated: false)
         playControllViewEmbed.screenIsLock = false
-        startReadyToPlay()
-        playerStatu = PlayerStatus.Playing
+        if isAuthAccross == false {   //鉴权不通过时
+            self.delegate?.currentVideoPlayToEnd(nil, false)
+        } else {                     //鉴权通过时，重播
+            startReadyToPlay()
+            playerStatu = PlayerStatus.Playing
+        }
     }
     
     // MARK: - 开始播放准备
