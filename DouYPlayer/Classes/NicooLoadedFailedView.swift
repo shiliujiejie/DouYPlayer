@@ -14,7 +14,7 @@ class NicooLoadedFailedView: UIView {
     
     static let notNetwork = "加载失败,请检查网络设置!"
     static let resUnavailable = "连接超时,需重新获取视频!"
-    static let noPermission = "您今日观看次数已用完了, 赶快去充值/分享App吧!"
+    static let noPermission = "您今日次数已用完了, 赶快去充值会员或分享App，观看完整版视频吧 😊"
     var loadFailView: NetWorkFailOrErrorView = {
         let view = NetWorkFailOrErrorView.init(frame: CGRect.zero)
         return view
@@ -39,7 +39,7 @@ class NicooLoadedFailedView: UIView {
         super.init(frame: frame)
         self.layer.cornerRadius  = 5
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
+        self.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         self.loadUI()
         self.addHandler()
     }
@@ -55,7 +55,7 @@ class NicooLoadedFailedView: UIView {
         layoutAllSubviews()
     }
     
-    /// 设置展示样式 showType: 1.失败 2.链接失效 3.没有次数 4.金币购买
+    /// 设置展示样式 showType: 1.失败 2.链接失效 3.没有次数 4.金币解锁
     ///
     /// - Parameter
     func setType(_ showType: LoadFailedViewStyle) {
@@ -123,8 +123,8 @@ class CoinTipView: UIView {
     var titleLabel: UILabel = {
         let lable = UILabel()
         lable.textAlignment = .center
-        lable.font = UIFont.systemFont(ofSize: 13)
-        lable.textColor = UIColor.red
+        lable.font = UIFont.boldSystemFont(ofSize: 15)
+        lable.textColor = UIColor.white
         lable.numberOfLines = 2
         return lable
     }()
@@ -159,7 +159,7 @@ class CoinTipView: UIView {
     }()
     var goPayButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("确认支付", for: .normal)
+        button.setTitle("立即解锁", for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 19
         button.layer.masksToBounds = true
@@ -198,14 +198,15 @@ class CoinTipView: UIView {
     }
     
     func setCoinsModel(_ coins: CoinsVideoModel) {
-        titleLabel.text = "视频由抖友\(coins.userName)上传, 并设置观看价格"
+        let tipsStr = "视频由抖友 <\(coins.userName)> 上传, 并设置 完整版 解锁价格:"
+        titleLabel.attributedText = TextManager.getAttributeStringWithString(tipsStr, lineSpace: 6)
         coinLabel.text = "\(coins.videoCoins)金币"
         coinLeaseLabel.text = "我的金币: \(coins.coinsUserPacket)"
         if coins.coinsUserPacket >= coins.videoCoins {  // 金币足够，可以支付
-            goPayButton.setTitle("确认支付", for: .normal)
+            goPayButton.setTitle("立即解锁", for: .normal)
             canPay = true
         } else {
-            goPayButton.setTitle("马上充值", for: .normal)
+            goPayButton.setTitle("获取金币", for: .normal)
             canPay = false
         }
     }
@@ -249,7 +250,7 @@ class NetWorkFailOrErrorView: UIView {
         let lable = UILabel()
         lable.textAlignment = .center
         lable.text = NicooLoadedFailedView.notNetwork
-        lable.font = UIFont.systemFont(ofSize: 14)
+        lable.font = UIFont.boldSystemFont(ofSize: 15)
         lable.textColor = UIColor.white
         lable.numberOfLines = 3
         return lable
@@ -257,7 +258,7 @@ class NetWorkFailOrErrorView: UIView {
     var retryButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("点击重试", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(red:0/255.0, green: 123/255.0, blue:  255/255.0, alpha: 0.95)
         button.addTarget(self, action: #selector(retryButtonClick(_:)), for: .touchUpInside)
@@ -266,7 +267,7 @@ class NetWorkFailOrErrorView: UIView {
     var reFetchButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("重新获取", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 19
         button.layer.masksToBounds = true
         button.backgroundColor = UIColor(red:0/255.0, green: 123/255.0, blue:  255/255.0, alpha: 0.95)
@@ -346,15 +347,15 @@ class NotCountPlayTipView: UIView {
         let lable = UILabel()
         lable.textAlignment = .center
         lable.attributedText = TextManager.getAttributeStringWithString(NicooLoadedFailedView.noPermission, lineSpace: 7)
-        lable.font = UIFont.systemFont(ofSize: 14)
+        lable.font = UIFont.boldSystemFont(ofSize: 15)
         lable.textColor = UIColor.white
         lable.numberOfLines = 3
         return lable
     }()
     var goChrageButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("充值VIP", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.setTitle("充值会员", for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 19
         button.layer.masksToBounds = true
         button.layer.borderWidth = 1.0
@@ -367,7 +368,7 @@ class NotCountPlayTipView: UIView {
     var goShareButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("去分享", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         button.layer.cornerRadius = 19
         button.layer.masksToBounds = true
         button.backgroundColor = UIColor(red: 0/255.0, green: 123/255.0, blue:  255/255.0, alpha: 0.95)
